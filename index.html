@@ -1,0 +1,2285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rahul Ranwa — Filmmaker & Visual Storyteller</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@300;400;600;700&family=Caveat:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-dark: #0a0a0a;
+            --bg-card: #111111;
+            --accent: #ff3366;
+            --accent-glow: rgba(255, 51, 102, 0.3);
+            --text: #ffffff;
+            --text-muted: #888888;
+            --border: #222222;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text);
+            overflow-x: hidden;
+            cursor: crosshair;
+        }
+
+        /* Grain overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,.03) 2px, rgba(255,255,255,.03) 4px);
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.3;
+        }
+
+        /* Custom cursor */
+        .cursor-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 10000;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s, height 0.3s;
+        }
+
+        .cursor-outline {
+            width: 40px;
+            height: 40px;
+            border: 2px solid var(--accent);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9998;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s, height 0.3s, opacity 0.3s;
+            opacity: 0.5;
+        }
+
+        a:hover ~ .cursor-dot,
+        button:hover ~ .cursor-dot {
+            width: 16px;
+            height: 16px;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            transform: translate(-50%, -50%);
+            object-fit: cover;
+            z-index: 0;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(10, 10, 10, 0.6);
+            z-index: 1;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 50%, var(--accent-glow), transparent 70%);
+            animation: pulse 4s ease-in-out infinite;
+            z-index: 1;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.6; }
+        }
+
+        .hero-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(3rem, 10vw, 8rem);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            background: linear-gradient(135deg, #ffffff 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: glitchReveal 2s cubic-bezier(0.16, 1, 0.3, 1), floatTitle 6s ease-in-out 2s infinite;
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            line-height: 1.1;
+        }
+
+        .hero-title::before,
+        .hero-title::after {
+            content: 'Filmmaking Portfolio';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #ffffff 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-title::before {
+            animation: glitch1 3s infinite;
+            clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+            transform: translateX(-3px);
+        }
+
+        .hero-title::after {
+            animation: glitch2 2.5s infinite;
+            clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
+            transform: translateX(3px);
+        }
+
+        @keyframes glitchReveal {
+            0% {
+                opacity: 0;
+                transform: translateY(-100px) scale(0.8);
+                filter: blur(10px);
+            }
+            20% {
+                opacity: 0.5;
+                transform: translateY(-50px) scale(0.9);
+            }
+            40% {
+                opacity: 0.8;
+                transform: translateY(-20px) scale(1.05);
+            }
+            60% {
+                opacity: 1;
+                transform: translateY(10px) scale(0.98);
+            }
+            80% {
+                transform: translateY(-5px) scale(1.02);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+                filter: blur(0);
+            }
+        }
+
+        @keyframes floatTitle {
+            0%, 100% {
+                transform: translateY(0) scale(1);
+            }
+            50% {
+                transform: translateY(-10px) scale(1.01);
+            }
+        }
+
+        @keyframes glitch1 {
+            0%, 90%, 100% {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            91% {
+                transform: translateX(-5px);
+                opacity: 0.8;
+            }
+            92% {
+                transform: translateX(5px);
+                opacity: 0.9;
+            }
+            93% {
+                transform: translateX(-3px);
+                opacity: 0.7;
+            }
+            94% {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes glitch2 {
+            0%, 85%, 100% {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            86% {
+                transform: translateX(5px);
+                opacity: 0.8;
+            }
+            87% {
+                transform: translateX(-5px);
+                opacity: 0.9;
+            }
+            88% {
+                transform: translateX(3px);
+                opacity: 0.7;
+            }
+            89% {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-100px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-subtitle {
+            font-family: 'Caveat', cursive;
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            letter-spacing: 0.05em;
+            text-transform: none;
+            color: rgba(255, 255, 255, 0.85);
+            margin-top: 2rem;
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            font-weight: 400;
+            overflow: hidden;
+            white-space: nowrap;
+            display: inline-block;
+            animation: handwritingLoop 8s ease-in-out infinite, fadeInUp 1.5s ease-out 0.8s both;
+            transform-origin: left center;
+            border-right: 2px solid transparent;
+        }
+
+        @keyframes handwritingLoop {
+            0% {
+                width: 0;
+                opacity: 0;
+                border-right-color: var(--accent);
+            }
+            5% {
+                opacity: 1;
+                border-right-color: var(--accent);
+            }
+            45% {
+                width: 100%;
+                opacity: 1;
+                border-right-color: var(--accent);
+            }
+            50% {
+                width: 100%;
+                opacity: 1;
+                border-right-color: transparent;
+            }
+            55% {
+                width: 100%;
+                opacity: 1;
+                border-right-color: transparent;
+            }
+            95% {
+                width: 0;
+                opacity: 0.3;
+                border-right-color: transparent;
+            }
+            100% {
+                width: 0;
+                opacity: 0;
+                border-right-color: transparent;
+            }
+        }
+
+        @keyframes subtleGlow {
+            0%, 100% {
+                text-shadow: 0 0 20px rgba(255, 51, 102, 0.2);
+            }
+            50% {
+                text-shadow: 0 0 30px rgba(255, 51, 102, 0.4), 0 0 15px rgba(255, 255, 255, 0.3);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes glow {
+            0%, 100% {
+                text-shadow: 0 0 10px rgba(255, 51, 102, 0.3);
+            }
+            50% {
+                text-shadow: 0 0 20px rgba(255, 51, 102, 0.6), 0 0 30px rgba(255, 51, 102, 0.4);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translate(-50%, 0); }
+            50% { transform: translate(-50%, 15px); }
+        }
+
+        .scroll-indicator::before {
+            content: '';
+            display: block;
+            width: 2px;
+            height: 60px;
+            background: linear-gradient(to bottom, var(--accent), transparent);
+            margin: 0 auto 10px;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 2rem 4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: linear-gradient(to bottom, rgba(10,10,10,0.9), transparent);
+            backdrop-filter: blur(10px);
+        }
+
+        .logo {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2rem;
+            letter-spacing: 0.1em;
+            color: var(--accent);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 300;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            position: relative;
+            transition: color 0.3s;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--accent);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Work Grid */
+        .work-section {
+            padding: 8rem 4rem;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        /* Stills Section */
+        .stills-section {
+            padding: 8rem 4rem;
+            max-width: 1600px;
+            margin: 0 auto;
+            background: var(--bg-card);
+            border-top: 1px solid var(--border);
+        }
+
+        .stills-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            grid-auto-rows: 200px;
+            gap: 1.5rem;
+            margin-top: 4rem;
+            grid-auto-flow: dense; /* Automatically fills gaps */
+        }
+
+        .still-item {
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            border-radius: 20px;
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s;
+        }
+
+        /* Bento box layout - optimized to eliminate gaps */
+        /* Using efficient repeating pattern that fills all space */
+        
+        .still-item:nth-child(1) {
+            grid-column: span 2;
+            grid-row: span 2;
+        }
+
+        .still-item:nth-child(2) {
+            grid-column: span 2;
+            grid-row: span 1;
+        }
+
+        .still-item:nth-child(3) {
+            grid-column: span 2;
+            grid-row: span 1;
+        }
+
+        .still-item:nth-child(4) {
+            grid-column: span 2;
+            grid-row: span 2;
+        }
+
+        .still-item:nth-child(5) {
+            grid-column: span 2;
+            grid-row: span 1;
+        }
+
+        .still-item:nth-child(6) {
+            grid-column: span 2;
+            grid-row: span 1;
+        }
+
+        .still-item:nth-child(7) {
+            grid-column: span 3;
+            grid-row: span 2;
+        }
+
+        .still-item:nth-child(8) {
+            grid-column: span 3;
+            grid-row: span 1;
+        }
+
+        .still-item:nth-child(9) {
+            grid-column: span 2;
+            grid-row: span 1;
+        }
+
+        .still-item:nth-child(10) {
+            grid-column: span 1;
+            grid-row: span 2;
+        }
+
+        .still-item:nth-child(11) {
+            grid-column: span 2;
+            grid-row: span 2;
+        }
+
+        .still-item:nth-child(12) {
+            grid-column: span 3;
+            grid-row: span 1;
+        }
+
+        .still-item:nth-child(13) {
+            grid-column: span 2;
+            grid-row: span 1;
+        }
+
+        .still-item:nth-child(14) {
+            grid-column: span 2;
+            grid-row: span 2;
+        }
+
+        .still-item:nth-child(15) {
+            grid-column: span 1;
+            grid-row: span 1;
+        }
+
+        .still-item:nth-child(16) {
+            grid-column: span 3;
+            grid-row: span 1;
+        }
+
+        .still-item:nth-child(17) {
+            grid-column: span 3;
+            grid-row: span 2;
+        }
+
+        .still-item:nth-child(18) {
+            grid-column: span 3;
+            grid-row: span 1;
+        }
+
+        .still-item:nth-child(19) {
+            grid-column: span 2;
+            grid-row: span 1;
+        }
+
+        .still-item:nth-child(20) {
+            grid-column: span 1;
+            grid-row: span 2;
+        }
+
+        .still-item:nth-child(21) {
+            grid-column: span 2;
+            grid-row: span 1;
+        }
+
+        .still-item:nth-child(22) {
+            grid-column: span 2;
+            grid-row: span 2;
+        }
+
+        .still-item:nth-child(23) {
+            grid-column: span 2;
+            grid-row: span 1;
+        }
+
+        .still-item:nth-child(24) {
+            grid-column: span 3;
+            grid-row: span 1;
+        }
+
+        .still-item:nth-child(25) {
+            grid-column: span 1;
+            grid-row: span 2;
+        }
+
+        .still-item:nth-child(26) {
+            grid-column: span 2;
+            grid-row: span 1;
+        }
+
+        .still-item:nth-child(27) {
+            grid-column: span 2;
+            grid-row: span 1;
+        }
+
+        .still-item:nth-child(28) {
+            grid-column: span 2;
+            grid-row: span 2;
+        }
+
+        .still-item:nth-child(29) {
+            grid-column: span 2;
+            grid-row: span 1;
+        }
+
+        .still-item:nth-child(30) {
+            grid-column: span 2;
+            grid-row: span 1;
+        }
+
+        .still-item:nth-child(31) {
+            grid-column: span 3;
+            grid-row: span 2;
+        }
+
+        .still-item:nth-child(32) {
+            grid-column: span 3;
+            grid-row: span 1;
+        }
+
+        .still-item:nth-child(33) {
+            grid-column: span 2;
+            grid-row: span 1;
+        }
+
+        .still-item:nth-child(34) {
+            grid-column: span 1;
+            grid-row: span 2;
+        }
+
+        .still-item:nth-child(35) {
+            grid-column: span 2;
+            grid-row: span 2;
+        }
+
+        .still-item:nth-child(36) {
+            grid-column: span 3;
+            grid-row: span 1;
+        }
+
+        .still-item:nth-child(37) {
+            grid-column: span 2;
+            grid-row: span 1;
+        }
+
+        .still-item:nth-child(38) {
+            grid-column: span 2;
+            grid-row: span 2;
+        }
+
+        .still-item:nth-child(39) {
+            grid-column: span 1;
+            grid-row: span 1;
+        }
+
+        .still-item:nth-child(40) {
+            grid-column: span 3;
+            grid-row: span 1;
+        }
+
+        .still-item:nth-child(41) {
+            grid-column: span 3;
+            grid-row: span 2;
+        }
+
+        .still-item:nth-child(42) {
+            grid-column: span 3;
+            grid-row: span 1;
+        }
+
+        .still-item:nth-child(43) {
+            grid-column: span 2;
+            grid-row: span 1;
+        }
+
+        .still-item:nth-child(44) {
+            grid-column: span 1;
+            grid-row: span 1;
+        }
+
+        .still-item:hover {
+            transform: scale(1.03);
+            box-shadow: 0 20px 60px rgba(255, 51, 102, 0.4);
+            z-index: 10;
+        }
+
+        .still-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .still-item:hover img {
+            filter: brightness(1.1);
+        }
+
+        /* Modal/Lightbox for still popup */
+        .still-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            cursor: pointer;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .still-modal.active {
+            display: flex;
+        }
+
+        .still-modal-content {
+            max-width: 90vw;
+            max-height: 90vh;
+            width: auto;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 20px 80px rgba(255, 51, 102, 0.3);
+            animation: zoomIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            cursor: default;
+        }
+
+        .still-modal-close {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            font-size: 3rem;
+            color: white;
+            cursor: pointer;
+            z-index: 10001;
+            transition: transform 0.3s, color 0.3s;
+            font-weight: 300;
+            line-height: 1;
+        }
+
+        .still-modal-close:hover {
+            transform: rotate(90deg);
+            color: var(--accent);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes zoomIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .still-hidden {
+            display: none;
+            opacity: 0;
+            animation: fadeInStills 0.6s ease-out forwards;
+        }
+
+        .still-visible {
+            display: block;
+        }
+
+        @keyframes fadeInStills {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .stills-view-more {
+            display: flex;
+            justify-content: center;
+            margin-top: 4rem;
+        }
+
+        .view-more-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            padding: 1rem 3rem;
+            background: transparent;
+            border: 2px solid var(--accent);
+            color: var(--accent);
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.3rem;
+            letter-spacing: 0.2em;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .view-more-btn:hover {
+            background: var(--accent);
+            color: var(--bg-dark);
+        }
+
+        .view-more-btn svg {
+            transition: transform 0.3s;
+        }
+
+        .view-more-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--accent);
+            transition: left 0.3s;
+            z-index: -1;
+        }
+
+        .view-more-btn:hover::before {
+            left: 0;
+        }
+
+        .view-more-btn:hover {
+            color: var(--bg-dark);
+        }
+
+        .btn-arrow {
+            transition: transform 0.3s;
+        }
+
+        .view-more-btn.active .btn-arrow {
+            transform: rotate(180deg);
+        }
+
+        .section-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(3rem, 8vw, 6rem);
+            letter-spacing: 0.1em;
+            margin-bottom: 4rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 3px;
+            background: var(--accent);
+            margin: 1rem auto 0;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            font-style: italic;
+            margin-top: 1rem;
+            margin-bottom: 0;
+            letter-spacing: 0.05em;
+            opacity: 0.8;
+        }
+
+        .work-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 3rem;
+            margin-top: 4rem;
+        }
+
+        .work-item.featured {
+            grid-column: span 2;
+            aspect-ratio: 21/9;
+        }
+
+        @media (max-width: 1200px) {
+            .work-item.featured {
+                grid-column: span 1;
+                aspect-ratio: 16/9;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .work-item.featured {
+                aspect-ratio: 16/9;
+            }
+        }
+
+        .work-item {
+            position: relative;
+            overflow: hidden;
+            aspect-ratio: 16/9;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            cursor: pointer;
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .work-item.featured {
+            border: 2px solid var(--accent);
+            box-shadow: 0 0 30px rgba(255, 51, 102, 0.3);
+            animation: featuredPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes featuredPulse {
+            0%, 100% {
+                box-shadow: 0 0 30px rgba(255, 51, 102, 0.3);
+            }
+            50% {
+                box-shadow: 0 0 50px rgba(255, 51, 102, 0.6);
+            }
+        }
+
+        .featured-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--accent);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.2rem;
+            letter-spacing: 0.2em;
+            z-index: 3;
+            transform: rotate(3deg);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            animation: badgeBounce 2s ease-in-out infinite;
+        }
+
+        @keyframes badgeBounce {
+            0%, 100% {
+                transform: rotate(3deg) translateY(0);
+            }
+            50% {
+                transform: rotate(3deg) translateY(-5px);
+            }
+        }
+
+        .work-item:hover {
+            transform: translateY(-10px);
+        }
+
+        .work-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, var(--accent-glow), transparent);
+            opacity: 0;
+            transition: opacity 0.5s;
+            z-index: 1;
+        }
+
+        .work-item:hover::before {
+            opacity: 1;
+        }
+
+        .work-thumbnail {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .work-item:hover .work-thumbnail {
+            transform: scale(1.05);
+        }
+
+        .work-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 2rem;
+            background: linear-gradient(to top, rgba(0,0,0,0.95), transparent);
+            transform: translateY(100%);
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 2;
+        }
+
+        .work-item:hover .work-overlay {
+            transform: translateY(0);
+        }
+
+        .work-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2rem;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.5rem;
+        }
+
+        .work-category {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+        }
+
+        /* About Section */
+        .about-section {
+            padding: 8rem 4rem;
+            background: var(--bg-card);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .about-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 400px 1fr;
+            gap: 6rem;
+        }
+
+        .about-left {
+            position: sticky;
+            top: 120px;
+            height: fit-content;
+        }
+
+        .profile-image-placeholder {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: var(--bg-dark);
+            border: 2px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
+        .about-name {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 3rem;
+            letter-spacing: 0.05em;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+            line-height: 1;
+        }
+
+        .about-role {
+            font-size: 1.2rem;
+            color: var(--text);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .about-divider {
+            width: 60px;
+            height: 2px;
+            background: var(--accent);
+            margin: 2rem 0;
+        }
+
+        .about-bio {
+            font-size: 0.95rem;
+            line-height: 1.8;
+            color: var(--text-muted);
+            margin-bottom: 3rem;
+        }
+
+        .about-contact-info {
+            margin-top: 3rem;
+        }
+
+        .contact-heading {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.8rem;
+            letter-spacing: 0.1em;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-item {
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        .contact-item a {
+            color: var(--text);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .contact-item a:hover {
+            color: var(--accent);
+        }
+
+        .contact-social {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .contact-social a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        .contact-social a:hover {
+            color: var(--accent);
+        }
+
+        .about-right {
+            padding-left: 2rem;
+            border-left: 1px solid var(--border);
+        }
+
+        .experience-section {
+            margin-bottom: 4rem;
+        }
+
+        .section-heading {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2rem;
+            letter-spacing: 0.1em;
+            color: var(--accent);
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .experience-item {
+            margin-bottom: 2.5rem;
+            padding-left: 2rem;
+            border-left: 2px solid var(--border);
+            position: relative;
+        }
+
+        .experience-item::before {
+            content: '';
+            position: absolute;
+            left: -6px;
+            top: 5px;
+            width: 10px;
+            height: 10px;
+            background: var(--accent);
+            border-radius: 50%;
+        }
+
+        .experience-item.highlight-achievement {
+            border-left-color: var(--accent);
+            border-left-width: 3px;
+        }
+
+        .experience-item.highlight-achievement::before {
+            width: 14px;
+            height: 14px;
+            left: -8.5px;
+            box-shadow: 0 0 15px rgba(255, 51, 102, 0.6);
+        }
+
+        .experience-year {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.5rem;
+        }
+
+        .experience-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.5rem;
+            letter-spacing: 0.05em;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+        }
+
+        .experience-description {
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: var(--text-muted);
+        }
+
+        .about-stats-new {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .stat-box {
+            text-align: center;
+            padding: 1.5rem;
+            background: var(--bg-dark);
+            border: 1px solid var(--border);
+        }
+
+        .stat-box .stat-number {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2.5rem;
+            color: var(--accent);
+            letter-spacing: 0.1em;
+        }
+
+        .stat-box .stat-label {
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            font-size: 0.7rem;
+            margin-top: 0.5rem;
+        }
+
+        /* Contact Section */
+        .contact-section {
+            padding: 8rem 4rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: #000;
+        }
+
+        .contact-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            object-position: center;
+            z-index: 0;
+            opacity: 1;
+        }
+
+        .contact-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(10, 10, 10, 0.5);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .contact-section > *:not(.contact-video) {
+            position: relative;
+            z-index: 2;
+        }
+
+        .contact-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(3rem, 10vw, 8rem);
+            letter-spacing: 0.1em;
+            margin-bottom: 2rem;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.8), 0 2px 10px rgba(0, 0, 0, 0.9);
+        }
+
+        .contact-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            margin-bottom: 3rem;
+            letter-spacing: 0.1em;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+        }
+
+        .contact-email {
+            display: inline-block;
+            font-size: clamp(1.5rem, 4vw, 3rem);
+            color: var(--accent);
+            text-decoration: none;
+            letter-spacing: 0.05em;
+            position: relative;
+            padding: 1rem 2rem;
+            border: 2px solid var(--accent);
+            transition: all 0.3s;
+            background: rgba(10, 10, 10, 0.7);
+            backdrop-filter: blur(5px);
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+        }
+
+        .contact-email:hover {
+            background: var(--accent);
+            color: var(--bg-dark);
+            box-shadow: 0 0 30px var(--accent-glow);
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 4rem;
+        }
+
+        .social-link {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 1rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            transition: color 0.3s;
+            position: relative;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+        }
+
+        .social-link::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: -20px;
+            width: 10px;
+            height: 2px;
+            background: var(--accent);
+            transform: translateY(-50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .social-link:hover {
+            color: var(--accent);
+        }
+
+        .social-link:hover::before {
+            opacity: 1;
+        }
+
+        /* Footer */
+        footer {
+            padding: 3rem 4rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .copyright {
+            letter-spacing: 0.1em;
+        }
+
+        /* Skills Section */
+        .skills-section {
+            padding: 8rem 4rem;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .skill-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 3rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+
+        /* Direction card - centered and larger */
+        .skill-card.primary {
+            grid-column: 2 / 4; /* Span middle 2 columns */
+            grid-row: 2; /* Place in second row */
+            border: 2px solid rgba(255, 51, 102, 0.6);
+            background: linear-gradient(135deg, var(--bg-card) 0%, rgba(255, 51, 102, 0.08) 100%);
+            padding: 4rem 3rem;
+        }
+
+        /* First 4 skills in top row */
+        .skill-card:nth-child(1) { grid-column: 1; grid-row: 1; }
+        .skill-card:nth-child(2) { grid-column: 2; grid-row: 1; }
+        .skill-card:nth-child(3) { grid-column: 3; grid-row: 1; }
+        .skill-card:nth-child(4) { grid-column: 4; grid-row: 1; }
+
+        .skill-card.primary .skill-title {
+            color: var(--text);
+            font-size: 2.5rem;
+        }
+
+        .skill-card.primary .skill-icon {
+            filter: drop-shadow(0 0 10px rgba(255, 51, 102, 0.3));
+            font-size: 4.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .skill-card.primary .skill-description {
+            font-size: 1.05rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .skill-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--accent);
+            transform: scaleX(0);
+            transition: transform 0.3s;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+        }
+
+        .skill-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .skill-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .skill-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.8rem;
+            letter-spacing: 0.1em;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .skill-description {
+            color: var(--text-muted);
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav {
+                padding: 1.5rem 2rem;
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .logo {
+                font-size: 1.5rem;
+            }
+
+            .nav-links {
+                gap: 1rem;
+                font-size: 0.8rem;
+            }
+
+            .hero-title {
+                font-size: clamp(2rem, 8vw, 4rem);
+            }
+
+            .hero-subtitle {
+                font-size: clamp(1.5rem, 4vw, 2.5rem);
+                letter-spacing: 0.05em;
+                animation: fadeInUp 1.5s ease-out 0.8s both;
+                width: auto;
+                white-space: normal;
+            }
+
+            .scroll-indicator {
+                bottom: 30px;
+            }
+
+            .work-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .work-item.featured {
+                grid-column: span 1;
+                aspect-ratio: 16/9;
+            }
+
+            .featured-badge {
+                top: 10px;
+                right: 10px;
+                padding: 0.4rem 1rem;
+                font-size: 0.9rem;
+            }
+
+            .work-title {
+                font-size: 1.5rem;
+            }
+
+            .work-category {
+                font-size: 0.8rem;
+            }
+
+            .about-container {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .about-left {
+                position: static;
+            }
+
+            .profile-image-placeholder {
+                width: 150px;
+                height: 150px;
+                margin: 0 auto 2rem;
+            }
+
+            .profile-image-placeholder span {
+                font-size: 3rem !important;
+            }
+
+            .about-name {
+                font-size: 2.5rem;
+                text-align: center;
+            }
+
+            .about-role {
+                text-align: center;
+                font-size: 1rem;
+            }
+
+            .about-divider {
+                margin: 1.5rem auto;
+            }
+
+            .about-bio {
+                text-align: center;
+                font-size: 0.9rem;
+            }
+
+            .about-contact-info {
+                text-align: center;
+            }
+
+            .contact-heading {
+                font-size: 1.5rem;
+            }
+
+            .contact-item {
+                font-size: 0.85rem;
+            }
+
+            .about-right {
+                padding-left: 0;
+                border-left: none;
+            }
+
+            .section-heading {
+                font-size: 1.5rem;
+            }
+
+            .experience-item {
+                padding-left: 1.5rem;
+            }
+
+            .experience-title {
+                font-size: 1.2rem;
+            }
+
+            .experience-description {
+                font-size: 0.85rem;
+            }
+
+            .about-stats-new {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .stat-box {
+                padding: 1rem;
+            }
+
+            .stat-box .stat-number {
+                font-size: 2rem;
+            }
+
+            .skills-section {
+                padding: 4rem 2rem;
+            }
+
+            .stills-section {
+                padding: 4rem 2rem;
+            }
+
+            .stills-grid {
+                grid-template-columns: 1fr;
+                grid-auto-rows: 250px;
+                gap: 1rem;
+            }
+
+            /* Reset bento layout on mobile - all items span 1 column */
+            .still-item {
+                grid-column: span 1 !important;
+                grid-row: span 1 !important;
+            }
+
+            .still-item {
+                border-radius: 15px;
+            }
+
+            .skills-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .skill-card {
+                padding: 2rem 1.5rem;
+            }
+
+            /* Reset grid positioning on mobile */
+            .skill-card.primary,
+            .skill-card:nth-child(1),
+            .skill-card:nth-child(2),
+            .skill-card:nth-child(3),
+            .skill-card:nth-child(4) {
+                grid-column: 1;
+                grid-row: auto;
+            }
+
+            .skill-card.primary {
+                padding: 3rem 2rem;
+            }
+
+            .skill-card.primary .skill-icon {
+                font-size: 3.5rem;
+            }
+
+            .skill-card.primary .skill-title {
+                font-size: 2rem;
+            }
+
+            .skill-icon {
+                font-size: 2.5rem;
+            }
+
+            .skill-title {
+                font-size: 1.5rem;
+            }
+
+            .skill-description {
+                font-size: 0.85rem;
+            }
+
+            .work-section,
+            .about-section,
+            .skills-section,
+            .contact-section {
+                padding: 4rem 2rem;
+            }
+
+            .section-title {
+                font-size: clamp(2rem, 6vw, 3rem);
+            }
+
+            .contact-title {
+                font-size: clamp(2rem, 8vw, 4rem);
+            }
+
+            .contact-subtitle {
+                font-size: 1rem;
+            }
+
+            .contact-email {
+                font-size: clamp(1rem, 3vw, 1.5rem);
+                padding: 0.75rem 1.5rem;
+            }
+
+            .social-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .social-link {
+                font-size: 0.9rem;
+            }
+
+            footer {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+                padding: 2rem 1.5rem;
+                font-size: 0.8rem;
+            }
+
+            body {
+                cursor: default;
+            }
+
+            .cursor-dot,
+            .cursor-outline {
+                display: none;
+            }
+        }
+
+        /* Extra small phones */
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 2rem;
+                letter-spacing: 0.1em;
+            }
+
+            .hero-subtitle {
+                font-size: 1.2rem;
+                letter-spacing: 0.05em;
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 0.75rem;
+            }
+
+            .about-name {
+                font-size: 2rem;
+            }
+
+            .about-role {
+                font-size: 0.9rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .contact-email {
+                font-size: 1rem;
+                padding: 0.6rem 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">Rahul Ranwa</div>
+        <ul class="nav-links">
+            <li><a href="#work">Work</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="https://docs.google.com/document/d/1-vFuJajXBitrKvrdIKdN1bj1AegHGUlUfgFNPDh4BLI/edit?tab=t.0#heading=h.q8qwj2h4ts98" target="_blank">CV</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <video class="hero-video" autoplay muted loop playsinline>
+            <source src="surreal.mp4" type="video/mp4">
+        </video>
+        <h1 class="hero-title">Filmmaking Portfolio</h1>
+        <p class="hero-subtitle">i make stories that move</p>
+        <div class="scroll-indicator"></div>
+    </section>
+
+    <!-- Work Section -->
+    <section id="work" class="work-section">
+        <h2 class="section-title">Selected Work</h2>
+        <div class="work-grid">
+            <div class="work-item featured">
+                <div class="featured-badge">★ MUST WATCH ★</div>
+                <img class="work-thumbnail" src="https://img.youtube.com/vi/zVaaKt3deVk/maxresdefault.jpg" alt="Kites - A Short Film">
+                <div class="work-overlay">
+                    <h3 class="work-title">Kites</h3>
+                    <p class="work-category">Short Film • My Best Work</p>
+                    <a href="https://youtu.be/zVaaKt3deVk" target="_blank" style="display: inline-block; margin-top: 1.5rem; padding: 0.75rem 2rem; background: var(--accent); color: white; text-decoration: none; font-size: 1rem; letter-spacing: 0.1em; transition: all 0.3s; box-shadow: 0 4px 15px rgba(255, 51, 102, 0.4);">▶ WATCH NOW</a>
+                </div>
+            </div>
+
+            <div class="work-item">
+                <img class="work-thumbnail" src="https://img.youtube.com/vi/_oHhgosFYrw/maxresdefault.jpg" alt="Gaming Insaan - Amazon Prime Original">
+                <div class="work-overlay">
+                    <h3 class="work-title">Gaming Insaan</h3>
+                    <p class="work-category">Amazon Prime Original • Mainstream Project</p>
+                    <a href="https://youtu.be/_oHhgosFYrw?si=slW_X3OpceeaB3N5" target="_blank" style="display: inline-block; margin-top: 1rem; padding: 0.5rem 1.5rem; background: var(--accent); color: white; text-decoration: none; font-size: 0.9rem; letter-spacing: 0.1em; transition: all 0.3s;">WATCH NOW</a>
+                </div>
+            </div>
+
+            <div class="work-item">
+                <img class="work-thumbnail" src="https://img.youtube.com/vi/oq31X5R87Ys/maxresdefault.jpg" alt="Afsanay - A Short Film">
+                <div class="work-overlay">
+                    <h3 class="work-title">Afsanay</h3>
+                    <p class="work-category">Short Film</p>
+                    <a href="https://youtu.be/oq31X5R87Ys?si=Bed_PRBsIVzNIRUo" target="_blank" style="display: inline-block; margin-top: 1rem; padding: 0.5rem 1.5rem; background: var(--accent); color: white; text-decoration: none; font-size: 0.9rem; letter-spacing: 0.1em; transition: all 0.3s;">WATCH NOW</a>
+                </div>
+            </div>
+
+            <div class="work-item">
+                <img class="work-thumbnail" src="https://img.youtube.com/vi/JJfgZbH3JqE/maxresdefault.jpg" alt="Pandemonium - Short Film">
+                <div class="work-overlay">
+                    <h3 class="work-title">Pandemonium</h3>
+                    <p class="work-category">Short Film</p>
+                    <a href="https://youtu.be/JJfgZbH3JqE" target="_blank" style="display: inline-block; margin-top: 1rem; padding: 0.5rem 1.5rem; background: var(--accent); color: white; text-decoration: none; font-size: 0.9rem; letter-spacing: 0.1em; transition: all 0.3s;">WATCH NOW</a>
+                </div>
+            </div>
+
+            <div class="work-item">
+                <img class="work-thumbnail" src="https://img.youtube.com/vi/RCyoyeH5gxQ/maxresdefault.jpg" alt="Mist - A Short Film">
+                <div class="work-overlay">
+                    <h3 class="work-title">Mist</h3>
+                    <p class="work-category">Short Film • Made in 51 Hours</p>
+                    <a href="https://youtu.be/RCyoyeH5gxQ" target="_blank" style="display: inline-block; margin-top: 1rem; padding: 0.5rem 1.5rem; background: var(--accent); color: white; text-decoration: none; font-size: 0.9rem; letter-spacing: 0.1em; transition: all 0.3s;">WATCH NOW</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stills From My Films Section -->
+    <section class="stills-section">
+        <h2 class="section-title">Stills From My Films</h2>
+        <p class="section-subtitle">(click to expand the shot)</p>
+        
+        <div class="stills-grid" id="stillsGrid">
+            <!-- Preview: First 4 stills (always visible) -->
+            <div class="still-item" data-visible="true">
+                <img src="stills/7.png" alt="Film Still">
+            </div>
+            <div class="still-item" data-visible="true">
+                <img src="stills/Screenshot__41_.png" alt="Film Still">
+            </div>
+            <div class="still-item" data-visible="true">
+                <img src="stills/Screenshot__24_.png" alt="Film Still">
+            </div>
+            <div class="still-item" data-visible="true">
+                <img src="stills/1.png" alt="Film Still">
+            </div>
+            
+            <!-- Hidden stills (40 more) -->
+            <div class="still-item still-hidden">
+                <img src="stills/Screenshot__36_.png" alt="Film Still">
+            </div>
+            <div class="still-item still-hidden">
+                <img src="stills/Screenshot__31_.png" alt="Film Still">
+            </div>
+            <div class="still-item still-hidden">
+                <img src="stills/Screenshot__23_.png" alt="Film Still">
+            </div>
+            <div class="still-item still-hidden">
+                <img src="stills/Screenshot__45_.png" alt="Film Still">
+            </div>
+            <div class="still-item still-hidden">
+                <img src="stills/Screenshot__27_.png" alt="Film Still">
+            </div>
+            <div class="still-item still-hidden">
+                <img src="stills/Screenshot__15_.png" alt="Film Still">
+            </div>
+            <div class="still-item still-hidden">
+                <img src="stills/4.png" alt="Film Still">
+            </div>
+            <div class="still-item still-hidden">
+                <img src="stills/Screenshot__43_.png" alt="Film Still">
+            </div>
+            <div class="still-item still-hidden">
+                <img src="stills/Screenshot__46_.png" alt="Film Still">
+            </div>
+            <div class="still-item still-hidden">
+                <img src="stills/Screenshot__34_.png" alt="Film Still">
+            </div>
+            <div class="still-item still-hidden">
+                <img src="stills/Screenshot__10_.png" alt="Film Still">
+            </div>
+            <div class="still-item still-hidden">
+                <img src="stills/Screenshot__22_.png" alt="Film Still">
+            </div>
+            <div class="still-item still-hidden">
+                <img src="stills/3.png" alt="Film Still">
+            </div>
+            <div class="still-item still-hidden">
+                <img src="stills/Screenshot__25_.png" alt="Film Still">
+            </div>
+            <div class="still-item still-hidden">
+                <img src="stills/2.png" alt="Film Still">
+            </div>
+            <div class="still-item still-hidden">
+                <img src="stills/Screenshot__39_.png" alt="Film Still">
+            </div>
+            <div class="still-item still-hidden">
+                <img src="stills/Screenshot__28_.png" alt="Film Still">
+            </div>
+            <div class="still-item still-hidden">
+                <img src="stills/Screenshot__37_.png" alt="Film Still">
+            </div>
+            <div class="still-item still-hidden">
+                <img src="stills/5.png" alt="Film Still">
+            </div>
+            <div class="still-item still-hidden">
+                <img src="stills/Screenshot__26_.png" alt="Film Still">
+            </div>
+            <div class="still-item still-hidden">
+                <img src="stills/Screenshot__40_.png" alt="Film Still">
+            </div>
+            <div class="still-item still-hidden">
+                <img src="stills/8.png" alt="Film Still">
+            </div>
+            <div class="still-item still-hidden">
+                <img src="stills/Screenshot__51_.png" alt="Film Still">
+            </div>
+            <div class="still-item still-hidden">
+                <img src="stills/Screenshot__21_.png" alt="Film Still">
+            </div>
+            <div class="still-item still-hidden">
+                <img src="stills/Screenshot__29_.png" alt="Film Still">
+            </div>
+            <div class="still-item still-hidden">
+                <img src="stills/Screenshot__38_.png" alt="Film Still">
+            </div>
+            <div class="still-item still-hidden">
+                <img src="stills/Screenshot__30_.png" alt="Film Still">
+            </div>
+            <div class="still-item still-hidden">
+                <img src="stills/Screenshot__42_.png" alt="Film Still">
+            </div>
+            <div class="still-item still-hidden">
+                <img src="stills/6.png" alt="Film Still">
+            </div>
+            <div class="still-item still-hidden">
+                <img src="stills/Screenshot__33_.png" alt="Film Still">
+            </div>
+            <div class="still-item still-hidden">
+                <img src="stills/Screenshot__47_.png" alt="Film Still">
+            </div>
+            <div class="still-item still-hidden">
+                <img src="stills/Screenshot__44_.png" alt="Film Still">
+            </div>
+            <div class="still-item still-hidden">
+                <img src="stills/Screenshot__48_.png" alt="Film Still">
+            </div>
+            <div class="still-item still-hidden">
+                <img src="stills/Screenshot__32_.png" alt="Film Still">
+            </div>
+            <div class="still-item still-hidden">
+                <img src="stills/Screenshot__49_.png" alt="Film Still">
+            </div>
+            <div class="still-item still-hidden">
+                <img src="stills/Screenshot__50_.png" alt="Film Still">
+            </div>
+            <div class="still-item still-hidden">
+                <img src="stills/Screenshot__11_.png" alt="Film Still">
+            </div>
+            <div class="still-item still-hidden">
+                <img src="stills/Screenshot__52_.png" alt="Film Still">
+            </div>
+            <div class="still-item still-hidden">
+                <img src="stills/Screenshot__35_.png" alt="Film Still">
+            </div>
+            <div class="still-item still-hidden">
+                <img src="stills/Screenshot__14_.png" alt="Film Still">
+            </div>
+        </div>
+        
+        <div class="stills-view-more">
+            <button id="viewMoreStillsBtn" class="view-more-btn">
+                <span>VIEW MORE</span>
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10 4L10 16M10 16L16 10M10 16L4 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
+        </div>
+    </section>
+
+    <!-- Still Modal/Lightbox -->
+    <div class="still-modal" id="stillModal">
+        <span class="still-modal-close" id="closeModal">&times;</span>
+        <img class="still-modal-content" id="modalImage" src="" alt="Film Still">
+    </div>
+
+    <!-- About Section -->
+    <section id="about" class="about-section">
+        <div class="about-container">
+            <div class="about-left">
+                <div class="about-profile">
+                    <div class="profile-image-placeholder">
+                        <img src="profile-photo.jpg" alt="Rahul Ranwa" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+                    </div>
+                    <h2 class="about-name">Rahul Ranwa</h2>
+                    <p class="about-role">Filmmaker<br>Director</p>
+                    <div class="about-divider"></div>
+                    <p class="about-bio">Hey there, I'm Rahul. I'm a filmmaker and visual storyteller currently studying at IIT Kharagpur. I bring stories to life through innovative cinematography, compelling narratives, and meticulous post-production. My work spans from intimate documentaries to high-energy music videos and mainstream projects, always focused on authentic storytelling and visual excellence.</p>
+                </div>
+
+                <div class="about-contact-info">
+                    <h3 class="contact-heading">Contact</h3>
+                    <p class="contact-item">
+                        <a href="/cdn-cgi/l/email-protection#bdcfdcd5c8d1cfdcd3cadc93dbd4d1d0cefddad0dcd4d193ded2d0"><span class="__cf_email__" data-cfemail="e1938089948d93808f9680cf87888d8c92a1868c80888dcf828e8c">[email&#160;protected]</span></a>
+                    </p>
+                    <p class="contact-item">
+                        <a href="tel:+919057308308">+91 905 730 8308</a>
+                    </p>
+                    <p class="contact-item">IIT Kharagpur, India</p>
+                    <div class="contact-social">
+                        <a href="https://www.instagram.com/ranwamoment/" target="_blank">@ranwamoment</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="about-right">
+                <div class="experience-section">
+                    <h3 class="section-heading">Education</h3>
+                    <div class="experience-item">
+                        <p class="experience-year">2022 - Present</p>
+                        <h4 class="experience-title">IIT Kharagpur</h4>
+                        <p class="experience-description">Bachelor's + Master's degree in Aerospace Engineering<br>Exploring filmmaking alongside engineering</p>
+                    </div>
+                </div>
+
+                <div class="experience-section">
+                    <h3 class="section-heading">Experience & Achievements</h3>
+                    
+                    <div class="experience-item">
+                        <p class="experience-year">2022 - Present</p>
+                        <h4 class="experience-title">TFPS, IIT Kharagpur</h4>
+                        <p class="experience-description">Technology Filmmaking and Photography Society<br>Member since 4 years • Made 10+ Short Films<br><a href="https://www.youtube.com/@TFPSIITKgp" target="_blank" style="color: var(--accent); text-decoration: none;">→ View Society Channel</a></p>
+                    </div>
+
+                    <div class="experience-item">
+                        <p class="experience-year">2023</p>
+                        <h4 class="experience-title">Assistant Director - Amazon Prime</h4>
+                        <p class="experience-description">Gaming Insaan<br>Also served as 4th D.O.P whenever required</p>
+                    </div>
+
+                    <div class="experience-item">
+                        <p class="experience-year">2025</p>
+                        <h4 class="experience-title">IFP Film Festival Photography 🥈</h4>
+                        <p class="experience-description">National Level Film Festival - Won Silver<br>Led a team from IIT Kharagpur<br><a href="https://www.instagram.com/p/DS4PBqODBY3/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==" target="_blank" style="color: var(--accent); text-decoration: none;">→ View Submission</a></p>
+                    </div>
+
+                    <div class="experience-item highlight-achievement">
+                        <p class="experience-year">2025</p>
+                        <h4 class="experience-title">CAPTAIN - Inter-IIT Cult Meet 8.0 🥇</h4>
+                        <p class="experience-description">Hosted by IIT Kanpur<br>Represented the filmmaking team of IIT Kharagpur<br><strong style="color: var(--accent);">WON GOLD</strong><br><br>Made two short films:<br><a href="https://youtu.be/zVaaKt3deVk" target="_blank" style="color: var(--accent); text-decoration: none;">→ Kites</a> | <a href="https://youtu.be/RCyoyeH5gxQ" target="_blank" style="color: var(--accent); text-decoration: none;">→ Mist</a></p>
+                    </div>
+                </div>
+
+                <div class="experience-section">
+                    <h3 class="section-heading">Commercial Work</h3>
+                    
+                    <div class="experience-item">
+                        <p class="experience-year">2024</p>
+                        <h4 class="experience-title">Megalith Fest</h4>
+                        <p class="experience-description">Asia's biggest Civil Engineering Fest<br>Media Coverage Lead - Led the media coverage team<br><a href="https://www.instagram.com/reel/C4AVAz6gO3G/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==" target="_blank" style="color: var(--accent); text-decoration: none;">→ View Reel</a></p>
+                    </div>
+
+                    <div class="experience-item">
+                        <p class="experience-year">2025</p>
+                        <h4 class="experience-title">Prithvi - Geology Fest</h4>
+                        <p class="experience-description">Promotional content and event coverage<br><a href="https://www.instagram.com/reel/DInpLmqBUOW/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==" target="_blank" style="color: var(--accent); text-decoration: none;">→ View Reel</a></p>
+                    </div>
+                </div>
+
+                <div class="about-stats-new">
+                    <div class="stat-box">
+                        <div class="stat-number">15+</div>
+                        <div class="stat-label">Short Films</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number">4+</div>
+                        <div class="stat-label">Years Experience</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number">10+</div>
+                        <div class="stat-label">Freelance Clients</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section class="skills-section">
+        <h2 class="section-title">Skills & Interests</h2>
+        <div class="skills-grid">
+            <div class="skill-card">
+                <div class="skill-icon">✍️</div>
+                <h3 class="skill-title">Scriptwriting</h3>
+                <p class="skill-description">I write my scripts in <strong><em>Scenarist</em></strong>, focusing on story structure and clarity. From there, I build <strong><em>mood boards</em></strong> in <strong><em>Milanote</em></strong> to explore tone and atmosphere, then organize everything into clear presentations that help the crew fully understand the vision.</p>
+            </div>
+
+            <div class="skill-card">
+                <div class="skill-icon">🎥</div>
+                <h3 class="skill-title">Cinematography</h3>
+                <p class="skill-description">I plan shots with <strong><em>hand-drawn storyboards</em></strong>. I'm experienced with the <strong><em>Sony FX30</em></strong>, working mainly with <strong><em>Zeiss</em></strong> and <strong><em>Sigma</em></strong> lenses. <strong><em>Lighting Scenes</em></strong> is one of my favorite parts of Cinematography, and I mainly do that using <strong><em>Godox ML100 and LCR500</em></strong>.</p>
+            </div>
+
+            <div class="skill-card">
+                <div class="skill-icon">🎵</div>
+                <h3 class="skill-title">Sound</h3>
+                <p class="skill-description">I record sound using <strong><em>DJI lapels</em></strong>, <strong><em>Rode Shotguns</em></strong> and <strong><em>Zoom recorders</em></strong>. For <strong><em>mixing and music production</em></strong>, I work with <strong><em>FL Studio</em></strong>.</p>
+            </div>
+
+            <div class="skill-card">
+                <div class="skill-icon">✂️</div>
+                <h3 class="skill-title">Editing & Color Grading</h3>
+                <p class="skill-description">I work with <strong><em>Adobe Premiere Pro</em></strong> for <strong><em>editing</em></strong>, <strong><em>Adobe After Effects</em></strong> for <strong><em>VFX</em></strong>, and <strong><em>DaVinci Resolve</em></strong> for <strong><em>color grading</em></strong>, focusing on story telling, pacing, and a cinematic finish.</p>
+            </div>
+
+            <div class="skill-card primary">
+                <div class="skill-icon">🎬</div>
+                <h3 class="skill-title">Direction</h3>
+                <p class="skill-description">Beyond all the technical aspects, I love working closely with actors. I invest a lot of time in <strong><em>casting</em></strong> and <strong><em>rehearsals</em></strong>, making sure actors understand their characters deeply, sometimes even more than I do. I focus heavily on pre-production so that, once on set, I have the freedom and confidence to experiment and explore performances.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+        <video class="contact-video" autoplay muted loop playsinline>
+            <source src="HOSPITAL_LOOP.mp4" type="video/mp4">
+        </video>
+        <h2 class="contact-title">Let's Create Together</h2>
+        <p class="contact-subtitle">Available for freelance projects and collaborations</p>
+        <a href="/cdn-cgi/l/email-protection#e290838a978e90838c9583cc848b8e8f91a2858f838b8ecc818d8f" class="contact-email"><span class="__cf_email__" data-cfemail="beccdfd6cbd2ccdfd0c9df90d8d7d2d3cdfed9d3dfd7d290ddd1d3">[email&#160;protected]</span></a>
+        
+        <div class="social-links">
+            <a href="https://www.instagram.com/ranwamoment/" target="_blank" class="social-link">Instagram</a>
+            <a href="https://www.youtube.com/@RahulRanwa" target="_blank" class="social-link">YouTube</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="copyright">© 2026 Rahul Ranwa. All Rights Reserved.</div>
+        <div>IIT Kharagpur, India</div>
+    </footer>
+
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+        // Custom cursor
+        const cursorDot = document.querySelector('.cursor-dot');
+        const cursorOutline = document.querySelector('.cursor-outline');
+
+        document.addEventListener('mousemove', (e) => {
+            cursorDot.style.left = e.clientX + 'px';
+            cursorDot.style.top = e.clientY + 'px';
+            
+            cursorOutline.style.left = e.clientX + 'px';
+            cursorOutline.style.top = e.clientY + 'px';
+        });
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.work-item, .skill-card, .stat-box').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+
+        // Stills Gallery - View More Button
+        const viewMoreBtn = document.getElementById('viewMoreStillsBtn');
+        const hiddenStills = document.querySelectorAll('.still-hidden');
+        let stillsExpanded = false;
+
+        if (viewMoreBtn) {
+            viewMoreBtn.addEventListener('click', () => {
+                stillsExpanded = !stillsExpanded;
+                
+                hiddenStills.forEach((still, index) => {
+                    if (stillsExpanded) {
+                        setTimeout(() => {
+                            still.classList.remove('still-hidden');
+                            still.classList.add('still-visible');
+                        }, index * 100);
+                    } else {
+                        still.classList.remove('still-visible');
+                        still.classList.add('still-hidden');
+                    }
+                });
+
+                // Update button text
+                const buttonText = viewMoreBtn.querySelector('span');
+                if (stillsExpanded) {
+                    buttonText.textContent = 'VIEW LESS';
+                    viewMoreBtn.querySelector('svg').style.transform = 'rotate(180deg)';
+                } else {
+                    buttonText.textContent = 'VIEW MORE';
+                    viewMoreBtn.querySelector('svg').style.transform = 'rotate(0deg)';
+                }
+            });
+        }
+
+        // Still Modal/Lightbox
+        const stillModal = document.getElementById('stillModal');
+        const modalImage = document.getElementById('modalImage');
+        const closeModal = document.getElementById('closeModal');
+        const stillItems = document.querySelectorAll('.still-item');
+
+        stillItems.forEach(item => {
+            item.addEventListener('click', (e) => {
+                const imgSrc = item.querySelector('img').src;
+                modalImage.src = imgSrc;
+                stillModal.classList.add('active');
+                document.body.style.overflow = 'hidden'; // Prevent scrolling
+            });
+        });
+
+        // Close modal on click
+        stillModal.addEventListener('click', () => {
+            stillModal.classList.remove('active');
+            document.body.style.overflow = ''; // Restore scrolling
+        });
+
+        closeModal.addEventListener('click', (e) => {
+            e.stopPropagation();
+            stillModal.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+
+        // Close modal on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && stillModal.classList.contains('active')) {
+                stillModal.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+
+        // Prevent modal image from closing modal when clicked
+        modalImage.addEventListener('click', (e) => {
+            e.stopPropagation();
+        });
+    </script>
+</body>
+</html>
