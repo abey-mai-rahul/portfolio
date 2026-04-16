@@ -69,7 +69,6 @@
             pointer-events: none;
             z-index: 9998;
             transform: translate(-50%, -50%);
-            transition: width 0.3s, height 0.3s, opacity 0.3s;
             opacity: 0.5;
         }
 
@@ -895,45 +894,45 @@
             opacity: 0.8;
         }
 
+        /* ── Work Grid ── */
         .work-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: 3rem;
+            /* 2 equal columns on desktop */
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
             margin-top: 4rem;
         }
 
+        /* First two featured items: each takes one column, full-width feel */
         .work-item.featured {
-            grid-column: span 2;
-            aspect-ratio: 21/9;
+            grid-column: span 1;
+            aspect-ratio: 16/9;
+            border: 2px solid var(--accent);
+            box-shadow: 0 0 30px rgba(255, 51, 102, 0.3);
+            animation: featuredPulse 3s ease-in-out infinite;
         }
 
-        @media (max-width: 1200px) {
-            .work-item.featured {
-                grid-column: span 1;
-                aspect-ratio: 16/9;
-            }
+        /* Bottom three regular items sit in a 3-column sub-row */
+        .work-grid .work-item:not(.featured) {
+            aspect-ratio: 16/9;
         }
 
-        @media (max-width: 768px) {
-            .work-item.featured {
-                aspect-ratio: 16/9;
-            }
+        /* Make the 3 regular items span the full 2-col grid evenly */
+        /* We use a nested row trick: wrap them so they auto-fit 3 across */
+        .work-row-bottom {
+            grid-column: 1 / -1;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
         }
 
         .work-item {
             position: relative;
             overflow: hidden;
-            aspect-ratio: 16/9;
             background: var(--bg-card);
             border: 1px solid var(--border);
             cursor: pointer;
             transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .work-item.featured {
-            border: 2px solid var(--accent);
-            box-shadow: 0 0 30px rgba(255, 51, 102, 0.3);
-            animation: featuredPulse 3s ease-in-out infinite;
         }
 
         @keyframes featuredPulse {
@@ -1471,6 +1470,26 @@
             font-size: 0.95rem;
         }
 
+        /* Tablet: bottom row 2-up */
+        @media (min-width: 769px) and (max-width: 1100px) {
+            .work-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.5rem;
+            }
+
+            .work-row-bottom {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.5rem;
+            }
+
+            .work-row-bottom .work-item:last-child {
+                grid-column: 1 / -1;
+                max-width: 60%;
+                margin: 0 auto;
+                width: 100%;
+            }
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             nav {
@@ -1506,12 +1525,22 @@
 
             .work-grid {
                 grid-template-columns: 1fr;
-                gap: 2rem;
+                gap: 1.5rem;
             }
 
             .work-item.featured {
                 grid-column: span 1;
                 aspect-ratio: 16/9;
+            }
+
+            .work-row-bottom {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            /* Always show overlay on touch devices */
+            .work-overlay {
+                transform: translateY(0);
             }
 
             .featured-badge {
@@ -1731,6 +1760,29 @@
             }
         }
 
+        #stillsPage {
+            background: var(--bg-dark);
+        }
+
+        #stillsPage::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,.03) 2px, rgba(255,255,255,.03) 4px);
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.3;
+        }
+
+        #stillsPage > div {
+            position: relative;
+            z-index: 2;
+        }
+
+        #closeStillsPage {
+            font-family: 'Montserrat', sans-serif;
+        }
+
         /* Extra small phones */
         @media (max-width: 480px) {
             .hero-title {
@@ -1776,10 +1828,9 @@
     <nav>
         <div class="logo">Rahul Ranwa</div>
         <ul class="nav-links">
-            <li><a href="#work">Work</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="https://docs.google.com/document/d/1-vFuJajXBitrKvrdIKdN1bj1AegHGUlUfgFNPDh4BLI/edit?tab=t.0#heading=h.q8qwj2h4ts98" target="_blank">CV</a></li>
-            <li><a href="#contact">Contact</a></li>
+            <li><a href="https://drive.google.com/file/d/17dKTMV1E86ieCmAYO6lkcmeeSojZMN8z/view?usp=sharing" target="_blank">CV</a></li>
+            <li><a href="#" id="stillsNavBtn" class="nav-main-link">Stills</a></li>
+            <li><a href="#contact" class="nav-main-link">Contact</a></li>
         </ul>
     </nav>
 
@@ -1799,6 +1850,16 @@
         <div class="work-grid">
             <div class="work-item featured">
                 <div class="featured-badge">★ MUST WATCH ★</div>
+                <img class="work-thumbnail" src="https://img.youtube.com/vi/i4Z2JNPmNyk/maxresdefault.jpg" alt="False Prophet - A Short Film">
+                <div class="work-overlay">
+                    <h3 class="work-title">False Prophet</h3>
+                    <p class="work-category">Short Film</p>
+                    <a href="https://youtu.be/i4Z2JNPmNyk" target="_blank" style="display: inline-block; margin-top: 1.5rem; padding: 0.75rem 2rem; background: var(--accent); color: white; text-decoration: none; font-size: 1rem; letter-spacing: 0.1em; transition: all 0.3s; box-shadow: 0 4px 15px rgba(255, 51, 102, 0.4);">▶ WATCH NOW</a>
+                </div>
+            </div>
+
+            <div class="work-item featured">
+                <div class="featured-badge">★ MUST WATCH ★</div>
                 <img class="work-thumbnail" src="https://img.youtube.com/vi/zVaaKt3deVk/maxresdefault.jpg" alt="Kites - A Short Film">
                 <div class="work-overlay">
                     <h3 class="work-title">Kites</h3>
@@ -1807,46 +1868,42 @@
                 </div>
             </div>
 
-            <div class="work-item">
-                <img class="work-thumbnail" src="https://img.youtube.com/vi/_oHhgosFYrw/maxresdefault.jpg" alt="Gaming Insaan - Amazon Prime Original">
-                <div class="work-overlay">
-                    <h3 class="work-title">Gaming Insaan</h3>
-                    <p class="work-category">Amazon Prime Original • Mainstream Project</p>
-                    <a href="https://youtu.be/_oHhgosFYrw?si=slW_X3OpceeaB3N5" target="_blank" style="display: inline-block; margin-top: 1rem; padding: 0.5rem 1.5rem; background: var(--accent); color: white; text-decoration: none; font-size: 0.9rem; letter-spacing: 0.1em; transition: all 0.3s;">WATCH NOW</a>
+            <div class="work-row-bottom">
+                <div class="work-item">
+                    <img class="work-thumbnail" src="https://img.youtube.com/vi/_oHhgosFYrw/maxresdefault.jpg" alt="Gaming Insaan - Amazon Prime Original">
+                    <div class="work-overlay">
+                        <h3 class="work-title">Gaming Insaan</h3>
+                        <p class="work-category">Amazon Prime Original • Mainstream Project</p>
+                        <a href="https://youtu.be/_oHhgosFYrw?si=slW_X3OpceeaB3N5" target="_blank" style="display: inline-block; margin-top: 1rem; padding: 0.5rem 1.5rem; background: var(--accent); color: white; text-decoration: none; font-size: 0.9rem; letter-spacing: 0.1em; transition: all 0.3s;">WATCH NOW</a>
+                    </div>
                 </div>
-            </div>
 
-            <div class="work-item">
-                <img class="work-thumbnail" src="https://img.youtube.com/vi/oq31X5R87Ys/maxresdefault.jpg" alt="Afsanay - A Short Film">
-                <div class="work-overlay">
-                    <h3 class="work-title">Afsanay</h3>
-                    <p class="work-category">Short Film</p>
-                    <a href="https://youtu.be/oq31X5R87Ys?si=Bed_PRBsIVzNIRUo" target="_blank" style="display: inline-block; margin-top: 1rem; padding: 0.5rem 1.5rem; background: var(--accent); color: white; text-decoration: none; font-size: 0.9rem; letter-spacing: 0.1em; transition: all 0.3s;">WATCH NOW</a>
+                <div class="work-item">
+                    <img class="work-thumbnail" src="https://img.youtube.com/vi/oq31X5R87Ys/maxresdefault.jpg" alt="Afsanay - A Short Film">
+                    <div class="work-overlay">
+                        <h3 class="work-title">Afsanay</h3>
+                        <p class="work-category">Short Film</p>
+                        <a href="https://youtu.be/oq31X5R87Ys?si=Bed_PRBsIVzNIRUo" target="_blank" style="display: inline-block; margin-top: 1rem; padding: 0.5rem 1.5rem; background: var(--accent); color: white; text-decoration: none; font-size: 0.9rem; letter-spacing: 0.1em; transition: all 0.3s;">WATCH NOW</a>
+                    </div>
                 </div>
-            </div>
 
-            <div class="work-item">
-                <img class="work-thumbnail" src="https://img.youtube.com/vi/JJfgZbH3JqE/maxresdefault.jpg" alt="Pandemonium - Short Film">
-                <div class="work-overlay">
-                    <h3 class="work-title">Pandemonium</h3>
-                    <p class="work-category">Short Film</p>
-                    <a href="https://youtu.be/JJfgZbH3JqE" target="_blank" style="display: inline-block; margin-top: 1rem; padding: 0.5rem 1.5rem; background: var(--accent); color: white; text-decoration: none; font-size: 0.9rem; letter-spacing: 0.1em; transition: all 0.3s;">WATCH NOW</a>
-                </div>
-            </div>
-
-            <div class="work-item">
-                <img class="work-thumbnail" src="https://img.youtube.com/vi/RCyoyeH5gxQ/maxresdefault.jpg" alt="Mist - A Short Film">
-                <div class="work-overlay">
-                    <h3 class="work-title">Mist</h3>
-                    <p class="work-category">Short Film • Made in 51 Hours</p>
-                    <a href="https://youtu.be/RCyoyeH5gxQ" target="_blank" style="display: inline-block; margin-top: 1rem; padding: 0.5rem 1.5rem; background: var(--accent); color: white; text-decoration: none; font-size: 0.9rem; letter-spacing: 0.1em; transition: all 0.3s;">WATCH NOW</a>
+                <div class="work-item">
+                    <img class="work-thumbnail" src="https://img.youtube.com/vi/RCyoyeH5gxQ/maxresdefault.jpg" alt="Mist - A Short Film">
+                    <div class="work-overlay">
+                        <h3 class="work-title">Mist</h3>
+                        <p class="work-category">Short Film • Made in 51 Hours</p>
+                        <a href="https://youtu.be/RCyoyeH5gxQ" target="_blank" style="display: inline-block; margin-top: 1rem; padding: 0.5rem 1.5rem; background: var(--accent); color: white; text-decoration: none; font-size: 0.9rem; letter-spacing: 0.1em; transition: all 0.3s;">WATCH NOW</a>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Stills From My Films Section -->
-    <section class="stills-section">
+    <!-- Stills Page Overlay -->
+    <div id="stillsPage" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:var(--bg-dark); z-index:5000; overflow-y:auto;">
+        <button id="closeStillsPage" style="position:fixed; top:2rem; right:2rem; background:transparent; border:none; color:var(--text); font-size:2.5rem; cursor:pointer; z-index:5001; line-height:1; transition:color 0.3s, transform 0.3s;" onmouseover="this.style.color='var(--accent)';this.style.transform='rotate(90deg)'" onmouseout="this.style.color='var(--text)';this.style.transform='rotate(0deg)'">×</button>
+        <div style="padding: 8rem 4rem; max-width:1600px; margin:0 auto;">
+    <section class="stills-section" style="background:transparent; border:none; padding:0;">
         <h2 class="section-title">Stills From My Films</h2>
         <p class="section-subtitle">(click to expand the shot)</p>
         
@@ -1996,7 +2053,10 @@
                 </svg>
             </button>
         </div>
+        </div>
     </section>
+    </div><!-- /stills inner padding -->
+    </div><!-- /stillsPage overlay -->
 
     <!-- Still Modal/Lightbox -->
     <div class="still-modal" id="stillModal">
@@ -2015,15 +2075,7 @@
                     <h2 class="about-name">Rahul Ranwa</h2>
                     <p class="about-role">Filmmaker<br>Director</p>
                     <div class="about-divider"></div>
-                    <p class="about-bio">Hi… I'm Rahul. I make films. That's how I express myself.
-"The most personal is the most creative." they say, and personally,
-I love music, most days you'll find me somewhere with my headphones on.
- I love observing people and moments that usually go unnoticed. 
-I love poetry, and I write whenever words feel heavier than silence.
-I love drama, colours, paintings, history, cultures and this list never really ends. 
-I love art in general. I want to do it all.
-but in one life, how??
-That's when I fell in love with filmmaking, it lets me do exactly that. It brings together everything I love.</p>
+                    <p class="about-bio">Hey there, I'm Rahul. I'm a filmmaker and visual storyteller currently studying at IIT Kharagpur. I bring stories to life through innovative cinematography, compelling narratives, and meticulous post-production. My work spans from intimate documentaries to high-energy music videos and mainstream projects, always focused on authentic storytelling and visual excellence.</p>
                 </div>
 
                 <div class="about-contact-info">
@@ -2161,7 +2213,6 @@ That's when I fell in love with filmmaking, it lets me do exactly that. It bring
         <div class="social-links">
             <a href="https://www.instagram.com/ranwamoment/" target="_blank" class="social-link">Instagram</a>
             <a href="https://www.youtube.com/@RahulRanwa" target="_blank" class="social-link">YouTube</a>
-            <a href="https://letterboxd.com/abey_mai_rahul/" target="_blank" class="social-link">Letterboxd</a>
         </div>
     </section>
 
@@ -2171,21 +2222,34 @@ That's when I fell in love with filmmaking, it lets me do exactly that. It bring
         <div>IIT Kharagpur, India</div>
     </footer>
 
-    <script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         // Custom cursor
         const cursorDot = document.querySelector('.cursor-dot');
         const cursorOutline = document.querySelector('.cursor-outline');
 
+        let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
+        let outlineX = mouseX, outlineY = mouseY;
+
         document.addEventListener('mousemove', (e) => {
-            cursorDot.style.left = e.clientX + 'px';
-            cursorDot.style.top = e.clientY + 'px';
-            
-            cursorOutline.style.left = e.clientX + 'px';
-            cursorOutline.style.top = e.clientY + 'px';
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            // Dot snaps instantly
+            cursorDot.style.left = mouseX + 'px';
+            cursorDot.style.top = mouseY + 'px';
         });
 
-        // Smooth scrolling
+        // Outline follows with lerp for the trailing lag effect
+        (function animateOutline() {
+            outlineX += (mouseX - outlineX) * 0.12;
+            outlineY += (mouseY - outlineY) * 0.12;
+            cursorOutline.style.left = outlineX + 'px';
+            cursorOutline.style.top = outlineY + 'px';
+            requestAnimationFrame(animateOutline);
+        })();
+
+        // Smooth scrolling - skip non-anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            if (anchor.id === 'stillsNavBtn') return;
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
                 const target = document.querySelector(this.getAttribute('href'));
@@ -2193,6 +2257,51 @@ That's when I fell in love with filmmaking, it lets me do exactly that. It bring
                     target.scrollIntoView({ behavior: 'smooth' });
                 }
             });
+        });
+
+        // Stills page open/close
+        const stillsPage = document.getElementById('stillsPage');
+        const stillsNavBtn = document.getElementById('stillsNavBtn');
+        const closeStillsPage = document.getElementById('closeStillsPage');
+
+        function openStillsPage() {
+            stillsPage.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+            // small timeout for display:block to take effect before animating
+            requestAnimationFrame(() => {
+                stillsPage.style.opacity = '0';
+                stillsPage.style.transition = 'opacity 0.4s ease';
+                requestAnimationFrame(() => {
+                    stillsPage.style.opacity = '1';
+                });
+            });
+        }
+
+        function closeStillsPageFn() {
+            stillsPage.style.opacity = '0';
+            setTimeout(() => {
+                stillsPage.style.display = 'none';
+                document.body.style.overflow = '';
+                stillsPage.style.opacity = '1';
+            }, 400);
+        }
+
+        stillsNavBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            openStillsPage();
+        });
+
+        closeStillsPage.addEventListener('click', closeStillsPageFn);
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                if (stillModal.classList.contains('active')) {
+                    stillModal.classList.remove('active');
+                    document.body.style.overflow = '';
+                } else if (stillsPage.style.display === 'block') {
+                    closeStillsPageFn();
+                }
+            }
         });
 
         // Scroll animations
@@ -2275,14 +2384,6 @@ That's when I fell in love with filmmaking, it lets me do exactly that. It bring
             e.stopPropagation();
             stillModal.classList.remove('active');
             document.body.style.overflow = '';
-        });
-
-        // Close modal on Escape key
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && stillModal.classList.contains('active')) {
-                stillModal.classList.remove('active');
-                document.body.style.overflow = '';
-            }
         });
 
         // Prevent modal image from closing modal when clicked
